@@ -2,16 +2,21 @@
     <n-menu :value="checkactive()" @update:value="handleUpdateValue" :options="menuOptions" mode="horizontal"/>
 </template>
 
-<script>
+<script lang="ts">
 import { h ,defineComponent  } from 'vue'
 import { useRoute } from 'vue-router'
-import router from '../router/router.ts'
-import { NIcon  } from 'naive-ui'
-function renderIcon (icon) {
-  return () => h(NIcon, null, { default: () => h(icon) })
+import router from '../router/router'
+// import { NIcon  } from 'naive-ui'
+// function renderIcon (icon) {
+//   return () => h(NIcon, null, { default: () => h(icon) })
+// }
+interface menuOptions_item {
+  label: string
+  key: string
+  path: string
 }
 
-const menuOptions = [
+const menuOptions:menuOptions_item[] = [
   {
     label: '主页',
     key: '/home',
@@ -39,7 +44,7 @@ export default defineComponent({
         }
         return {
         menuOptions,
-        handleUpdateValue (key, item) {
+        handleUpdateValue (key:string, item:menuOptions_item) {
             router.push(item.path)
         },
         checkactive

@@ -23,7 +23,12 @@
                  @keyup="edit_plan(index)"
                  :placeholder="'计划'+(index+1)"
                  readonly
-                 type="text"></n-input>
+                 type="text">
+                 <template v-slot:prefix>
+                    <n-checkbox v-model:checked="item.checked">
+                    </n-checkbox>
+                 </template>
+                 </n-input>
         <n-input v-show="!item.disabled"
                  v-model:value="item.content"
                  :ref="'input_'+index"
@@ -34,16 +39,15 @@
                  :placeholder="'计划'+(index+1)">
         </n-input>
       </n-gi>
-
     </n-grid>
   </n-card>
-
 </template>
 
 <script lang="ts">
 interface plan_list_item {
   disabled: boolean
   content: string
+  checked:boolean
 }
 
 import { Ref, ref,defineComponent,getCurrentInstance  } from 'vue'
@@ -56,7 +60,8 @@ export default defineComponent({
     const addplan = () => {
       plan_list.value.unshift({
         content: content.value,
-        disabled: true
+        disabled: true,
+        checked: false
       })
       content.value = ''
     }

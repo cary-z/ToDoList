@@ -9,7 +9,7 @@
   </n-layout>
 </template>
 
-<script>
+<script lang="ts">
 import Home from './home/Home.vue'
 import FooterBar from '../components/FooterBar.vue'
 export default {
@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
 .n-layout ::v-deep .n-layout-scroll-container {
   width: 100vw;
   height: 100vh;

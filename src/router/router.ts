@@ -1,9 +1,9 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
   {
     path: '/',
-    redirect: '/mainpage',
+    redirect: '/home',
     component: () => import('../views/MainPage.vue'),
     children: [
       {
@@ -20,7 +20,7 @@ const routes = [
   },
   {
     path: '/',
-    redirect: '/otherspage',
+    redirect: '/sign-in',
     component: () => import('../views/OthersPage.vue'),
     children: [
       {
