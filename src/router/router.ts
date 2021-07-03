@@ -10,7 +10,12 @@ const routes = [
         path: '/home',
         name: 'home',
         component: () => import('../views/home/Home.vue'),
-      }
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: () => import('../views/profile/Profile.vue'),
+      },
     ]
   },
   {
@@ -26,8 +31,6 @@ const routes = [
     ]
   }
 ]
-
-// console.log(process.env.BASE_URL)
 
 const router = createRouter({
   history: createWebHashHistory(),
