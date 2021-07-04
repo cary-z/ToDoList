@@ -25,7 +25,7 @@
                  readonly
                  type="text">
                  <template v-slot:prefix>
-                    <n-checkbox v-model:checked="item.checked">
+                    <n-checkbox :key="'check_'+index" @update:checked="save_plan(index)" v-model:checked="item.checked">
                     </n-checkbox>
                  </template>
                  </n-input>
@@ -34,7 +34,7 @@
                  :ref="'input_'+index"
                  type="input"
                  @keyup="keyup_plan($event,index)"
-                 @blur="item.disabled = true"
+                 @blur="save_plan(index)"
                  clearable
                  :placeholder="'计划'+(index+1)">
         </n-input>
@@ -54,7 +54,8 @@ import { Ref, ref,defineComponent,getCurrentInstance  } from 'vue'
 export default defineComponent({
   setup() {
     const instance = getCurrentInstance()
-    const plan_list: Ref<plan_list_item[]> = ref([])
+    const local_list:plan_list_item[] = JSON.parse(localStorage.getItem('plan_list') as string) || []
+    const plan_list: Ref<plan_list_item[]> = ref(local_list)
     let content = ref('')
 
     const addplan = () => {
@@ -63,6 +64,7 @@ export default defineComponent({
         disabled: true,
         checked: false
       })
+      localStorage.setItem('plan_list',JSON.stringify(plan_list.value))
       content.value = ''
     }
 
@@ -70,6 +72,13 @@ export default defineComponent({
       plan_list.value[index].disabled = false
       setTimeout(() => {
         (instance?.refs['input_' + index] as HTMLElement).focus()
+      })
+    }
+
+    const save_plan = (index: number) => {
+      plan_list.value[index].disabled = true
+      setTimeout(() => { 
+        localStorage.setItem('plan_list',JSON.stringify(plan_list.value))
       })
     }
 
@@ -87,6 +96,7 @@ export default defineComponent({
       content,
       addplan,
       edit_plan,
+      save_plan,
       keyup_seach,
       keyup_plan
     }
@@ -102,7 +112,7 @@ export default defineComponent({
 .n-input--disabled {
   background-color: #fff;
 }
-::v-deep .n-input.n-input--disabled .n-input__input-el {
+:deep(.n-input.n-input--disabled .n-input__input-el) {
   color: black !important;
 }
 </style>
