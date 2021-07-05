@@ -7,6 +7,7 @@
       <n-gi>
         <n-input v-model:value="content"
                  @keyup="keyup_seach($event)"
+                 ref="todo"
                  type="input"
                  clearable
                  placeholder="今天需要做什么" />
@@ -41,6 +42,7 @@
         </n-input>
         <n-input v-show="!item.disabled"
                  v-model:value="item.content"
+                 :key="'input_'+index"
                  :ref="'input_'+index"
                  type="input"
                  @keyup="keyup_plan($event,index)"
@@ -59,7 +61,7 @@ interface plan_list_item {
   checked: boolean
 }
 
-import { Ref, ref, getCurrentInstance } from 'vue'
+import { Ref, ref, getCurrentInstance, InputHTMLAttributes } from 'vue'
 import { Close } from '@vicons/ionicons5'
 export default {
   components: {
@@ -94,7 +96,7 @@ export default {
     }
 
     const save_plan = (index: number) => {
-      plan_list.value[index].disabled = true
+      plan_list.value[index] && (plan_list.value[index].disabled = true)
       setTimeout(() => {
         localStorage.setItem('plan_list', JSON.stringify(plan_list.value))
       })
@@ -107,7 +109,22 @@ export default {
 
     const keyup_plan = (event: KeyboardEvent, index: number) => {
       event.code === 'Enter' && (event.target as HTMLElement).blur()
-      event.code === 'Escape' && (plan_list.value[index].content = '')
+      if (event.code === 'Escape') {
+        if (plan_list.value[index].content) {
+          plan_list.value[index].content = ''
+        } else {
+          delete_plan(index)
+          const surplus = index < plan_list.value.length ? index : index - 1
+          if (surplus >= 0) {
+            plan_list.value[surplus].disabled = false
+            setTimeout(() => {
+              ;(instance?.refs['input_' + surplus] as HTMLElement).focus()
+            })
+          } else {
+            ;(instance?.refs.todo as HTMLElement).focus()
+          }
+        }
+      }
     }
     return {
       plan_list,
