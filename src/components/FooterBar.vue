@@ -1,58 +1,67 @@
 <template>
-    <n-menu :value="checkactive()" @update:value="handleUpdateValue" :options="menuOptions" mode="horizontal"/>
+  <n-menu :value="checkactive()"
+          :on-update:value="handleUpdateValue"
+          :options="menuOptions"
+          mode="horizontal" />
 </template>
 
 <script lang="ts">
-import { h ,defineComponent  } from 'vue'
+import { h } from 'vue'
 import { useRoute } from 'vue-router'
 import router from '../router/router'
-// import { NIcon  } from 'naive-ui'
-// function renderIcon (icon) {
-//   return () => h(NIcon, null, { default: () => h(icon) })
-// }
+import { NIcon } from 'naive-ui'
+import { List, CalendarClearSharp, Person } from '@vicons/ionicons5'
+function renderIcon(icon: any) {
+  return () => h(NIcon, null, { default: () => h(icon) })
+}
 interface menuOptions_item {
   label: string
   key: string
   path: string
+  icon: any
 }
 
-const menuOptions:menuOptions_item[] = [
+const menuOptions: menuOptions_item[] = [
   {
-    label: '主页',
+    label: '任务',
     key: '/home',
-    // icon: renderIcon(),
+    icon: renderIcon(List),
     path: '/home'
   },
   {
     label: '其他',
     key: '/sign-in',
-    // icon: renderIcon(),
+    icon: renderIcon(CalendarClearSharp),
     path: '/sign-in'
   },
   {
     label: '我的',
     key: '/profile',
-    // icon: renderIcon(),
+    icon: renderIcon(Person),
     path: '/profile'
   }
 ]
-export default defineComponent({
-    setup () {
-        const route = useRoute()
-        const checkactive = () => {
-            return route.path
-        }
-        return {
-        menuOptions,
-        handleUpdateValue (key:string, item:menuOptions_item) {
-            router.push(item.path)
-        },
-        checkactive
+export default {
+  components: {
+    List,
+    Person,
+    CalendarClearSharp
+  },
+  setup() {
+    const route = useRoute()
+    const checkactive = () => {
+      return route.path
+    }
+    return {
+      menuOptions,
+      handleUpdateValue(key: string, item: menuOptions_item) {
+        router.push(item.path)
+      },
+      checkactive
     }
   }
-})
+}
 </script>
-
 <style scoped>
 .n-menu {
   width: 100%;

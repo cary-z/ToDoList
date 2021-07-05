@@ -24,11 +24,21 @@
                  :placeholder="'计划'+(index+1)"
                  readonly
                  type="text">
-                 <template v-slot:prefix>
-                    <n-checkbox :key="'check_'+index" @update:checked="save_plan(index)" v-model:checked="item.checked">
-                    </n-checkbox>
-                 </template>
-                 </n-input>
+          <template #prefix>
+            <n-checkbox :key="'check_'+index"
+                        @dblclick.stop=""
+                        @update:checked="save_plan(index)"
+                        v-model:checked="item.checked">
+            </n-checkbox>
+          </template>
+          <template #suffix>
+            <n-icon @click="delete_plan(index)"
+                    @dblclick.stop=""
+                    style="cursor: pointer;">
+              <Close />
+            </n-icon>
+          </template>
+        </n-input>
         <n-input v-show="!item.disabled"
                  v-model:value="item.content"
                  :ref="'input_'+index"
@@ -42,19 +52,22 @@
     </n-grid>
   </n-card>
 </template>
-
 <script lang="ts">
 interface plan_list_item {
   disabled: boolean
   content: string
-  checked:boolean
+  checked: boolean
 }
 
-import { Ref, ref,defineComponent,getCurrentInstance  } from 'vue'
-export default defineComponent({
+import { Ref, ref, getCurrentInstance } from 'vue'
+import { Close } from '@vicons/ionicons5'
+export default {
+  components: {
+    Close
+  },
   setup() {
     const instance = getCurrentInstance()
-    const local_list:plan_list_item[] = JSON.parse(localStorage.getItem('plan_list') as string) || []
+    const local_list: plan_list_item[] = JSON.parse(localStorage.getItem('plan_list') as string) || []
     const plan_list: Ref<plan_list_item[]> = ref(local_list)
     let content = ref('')
 
@@ -64,31 +77,36 @@ export default defineComponent({
         disabled: true,
         checked: false
       })
-      localStorage.setItem('plan_list',JSON.stringify(plan_list.value))
+      localStorage.setItem('plan_list', JSON.stringify(plan_list.value))
       content.value = ''
     }
 
     const edit_plan = (index: number) => {
       plan_list.value[index].disabled = false
       setTimeout(() => {
-        (instance?.refs['input_' + index] as HTMLElement).focus()
+        ;(instance?.refs['input_' + index] as HTMLElement).focus()
       })
+    }
+
+    const delete_plan = (index: number) => {
+      plan_list.value.splice(index, 1)
+      localStorage.setItem('plan_list', JSON.stringify(plan_list.value))
     }
 
     const save_plan = (index: number) => {
       plan_list.value[index].disabled = true
-      setTimeout(() => { 
-        localStorage.setItem('plan_list',JSON.stringify(plan_list.value))
+      setTimeout(() => {
+        localStorage.setItem('plan_list', JSON.stringify(plan_list.value))
       })
     }
 
-    const  keyup_seach = (event:KeyboardEvent) => {
+    const keyup_seach = (event: KeyboardEvent) => {
       event.code === 'Enter' && addplan()
       event.code === 'Escape' && (content.value = '')
     }
 
-    const keyup_plan = (event:KeyboardEvent,index:number) => {
-      event.code === 'Enter' && ((event.target as HTMLElement).blur())
+    const keyup_plan = (event: KeyboardEvent, index: number) => {
+      event.code === 'Enter' && (event.target as HTMLElement).blur()
       event.code === 'Escape' && (plan_list.value[index].content = '')
     }
     return {
@@ -97,11 +115,12 @@ export default defineComponent({
       addplan,
       edit_plan,
       save_plan,
+      delete_plan,
       keyup_seach,
       keyup_plan
     }
   }
-})
+}
 </script>
 
 <style lang="scss" scoped>

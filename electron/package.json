@@ -1,0 +1,28 @@
+{
+  "name": "ToDoList",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "packager": "electron-packager ./ ToDoList --platform=mas --overwrite"
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^13.1.4",
+    "electron-debug": "^1.5.0",
+    "electron-devtools-installer": "2.2.4"
+  },
+  "dependencies": {
+    "electron-packager": "^15.2.0"
+  }
+}
