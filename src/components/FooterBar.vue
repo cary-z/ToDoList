@@ -49,15 +49,14 @@ export default {
   },
   setup() {
     const route = useRoute()
-    const checkactive = () => {
-      return route.path
-    }
     return {
       menuOptions,
       handleUpdateValue(key: string, item: menuOptions_item) {
         router.push(item.path)
       },
-      checkactive
+      checkactive() {
+        return route.path
+      }
     }
   }
 }
