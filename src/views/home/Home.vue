@@ -20,8 +20,8 @@
             :key="'plan_'+index">
         <n-input v-show="item.disabled"
                  v-model:value="item.content"
-                 @dblclick="edit_plan(index)"
-                 @keyup="edit_plan(index)"
+                 @dblclick="edit_plan(index,instance)"
+                 @keyup="edit_plan(index,instance)"
                  :placeholder="'计划'+(index+1)"
                  readonly
                  type="text">
@@ -45,7 +45,7 @@
                  :key="'input_'+index"
                  :ref="'input_'+index"
                  type="input"
-                 @keyup="keyup_plan($event,index)"
+                 @keyup="keyup_plan($event,index,instance)"
                  @blur="save_plan(index)"
                  clearable
                  :placeholder="'计划'+(index+1)">
@@ -61,7 +61,8 @@ interface plan_list_item {
   checked: boolean
 }
 
-import { Ref, ref, getCurrentInstance, InputHTMLAttributes } from 'vue'
+import { getCurrentInstance } from 'vue'
+import usePlan from '../../use/common/usePlan'
 import { Close } from '@vicons/ionicons5'
 export default {
   components: {
@@ -69,64 +70,9 @@ export default {
   },
   setup() {
     const instance = getCurrentInstance()
-    const local_list: plan_list_item[] = JSON.parse(localStorage.getItem('plan_list') as string) || []
-    const plan_list: Ref<plan_list_item[]> = ref(local_list)
-    let content = ref('')
-
-    const addplan = () => {
-      plan_list.value.unshift({
-        content: content.value,
-        disabled: true,
-        checked: false
-      })
-      localStorage.setItem('plan_list', JSON.stringify(plan_list.value))
-      content.value = ''
-    }
-
-    const edit_plan = (index: number) => {
-      plan_list.value[index].disabled = false
-      setTimeout(() => {
-        ;(instance?.refs['input_' + index] as HTMLElement).focus()
-      })
-    }
-
-    const delete_plan = (index: number) => {
-      plan_list.value.splice(index, 1)
-      localStorage.setItem('plan_list', JSON.stringify(plan_list.value))
-    }
-
-    const save_plan = (index: number) => {
-      plan_list.value[index] && (plan_list.value[index].disabled = true)
-      setTimeout(() => {
-        localStorage.setItem('plan_list', JSON.stringify(plan_list.value))
-      })
-    }
-
-    const keyup_seach = (event: KeyboardEvent) => {
-      event.code === 'Enter' && addplan()
-      event.code === 'Escape' && (content.value = '')
-    }
-
-    const keyup_plan = (event: KeyboardEvent, index: number) => {
-      event.code === 'Enter' && (event.target as HTMLElement).blur()
-      if (event.code === 'Escape') {
-        if (plan_list.value[index].content) {
-          plan_list.value[index].content = ''
-        } else {
-          delete_plan(index)
-          const surplus = index < plan_list.value.length ? index : index - 1
-          if (surplus >= 0) {
-            plan_list.value[surplus].disabled = false
-            setTimeout(() => {
-              ;(instance?.refs['input_' + surplus] as HTMLElement).focus()
-            })
-          } else {
-            ;(instance?.refs.todo as HTMLElement).focus()
-          }
-        }
-      }
-    }
+    const { plan_list, content, addplan, edit_plan, save_plan, delete_plan, keyup_seach, keyup_plan } = usePlan()
     return {
+      instance,
       plan_list,
       content,
       addplan,
