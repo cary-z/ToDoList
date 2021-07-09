@@ -46,6 +46,7 @@ export default function () {
   }
 
   const keyup_plan = (event: KeyboardEvent, index: number, instance: any) => {
+    // console.log(event.code)
     event.code === 'Enter' && (event.target as HTMLElement).blur()
     if (event.code === 'Escape') {
       if (plan_list[index].content) {
@@ -62,6 +63,10 @@ export default function () {
           ;(instance?.refs.todo as HTMLElement).focus()
         }
       }
+    }
+    if (event.code === 'ControlLeft') {
+      plan_list[index].checked = !plan_list[index].checked
+      ;(event.target as HTMLElement).blur()
     }
   }
   return { plan_list, content, addplan, edit_plan, delete_plan, save_plan, keyup_seach, keyup_plan }
