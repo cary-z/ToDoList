@@ -10,7 +10,7 @@ import { h } from 'vue'
 import { useRoute } from 'vue-router'
 import router from '../router/router'
 import { NIcon } from 'naive-ui'
-import { List, CalendarClearSharp, Person } from '@vicons/ionicons5'
+import { List, NewspaperOutline, CalendarClearSharp, Person } from '@vicons/ionicons5'
 function renderIcon(icon: any) {
   return () => h(NIcon, null, { default: () => h(icon) })
 }
@@ -29,11 +29,17 @@ const menuOptions: menuOptions_item[] = [
     path: '/home'
   },
   {
-    label: '其他',
-    key: '/sign-in',
-    icon: renderIcon(CalendarClearSharp),
-    path: '/sign-in'
+    label: '快捷键说明',
+    key: '/explain',
+    icon: renderIcon(NewspaperOutline),
+    path: '/explain'
   },
+  // {
+  //   label: '其他',
+  //   key: '',
+  //   icon: renderIcon(CalendarClearSharp),
+  //   path: ''
+  // },
   {
     label: '我的',
     key: '/profile',
@@ -45,6 +51,7 @@ export default {
   components: {
     List,
     Person,
+    NewspaperOutline,
     CalendarClearSharp
   },
   setup() {

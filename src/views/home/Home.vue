@@ -20,8 +20,9 @@
             :key="'plan_'+index">
         <n-input v-show="item.disabled"
                  v-model:value="item.content"
-                 @dblclick="edit_plan(index,instance)"
-                 @keyup="edit_plan(index,instance)"
+                 @dblclick="edit_plan($event,index,instance)"
+                 @keyup="edit_plan($event,index,instance)"
+                 :ref="'show_input_'+index"
                  :placeholder="'计划'+(index+1)"
                  readonly
                  type="text">

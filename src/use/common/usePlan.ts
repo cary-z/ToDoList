@@ -21,7 +21,11 @@ export default function () {
     content.value = ''
   }
 
-  const edit_plan = (index: number, instance: any) => {
+  const edit_plan = (event: KeyboardEvent, index: number, instance: any) => {
+    if (event.code === 'ControlLeft' || event.code === 'ControlRight') {
+      plan_list[index].checked = !plan_list[index].checked
+      return
+    }
     plan_list[index].disabled = false
     nextTick(() => {
       ;(instance?.refs['input_' + index] as HTMLElement).focus()
@@ -64,9 +68,12 @@ export default function () {
         }
       }
     }
-    if (event.code === 'ControlLeft') {
+    if (event.code === 'ControlLeft' || event.code === 'ControlRight') {
       plan_list[index].checked = !plan_list[index].checked
       ;(event.target as HTMLElement).blur()
+      nextTick(() => {
+        ;(instance?.refs['show_input_' + index] as HTMLElement).focus()
+      })
     }
   }
   return { plan_list, content, addplan, edit_plan, delete_plan, save_plan, keyup_seach, keyup_plan }
