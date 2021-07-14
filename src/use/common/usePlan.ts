@@ -1,4 +1,4 @@
-import { Ref, ref, reactive, nextTick } from 'vue'
+import { ref, reactive, nextTick } from 'vue'
 
 interface plan_list_item {
   disabled: boolean

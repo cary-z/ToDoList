@@ -55,13 +55,8 @@
     </n-grid>
   </n-card>
 </template>
-<script lang="ts">
-interface plan_list_item {
-  disabled: boolean
-  content: string
-  checked: boolean
-}
 
+<script lang="ts">
 import { getCurrentInstance } from 'vue'
 import usePlan from '../../use/common/usePlan'
 import { Close } from '@vicons/ionicons5'
