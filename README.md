@@ -25,3 +25,9 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 3. Open `src/main.ts` in VSCode
 4. Open the VSCode command palette
 5. Search and run "Select TypeScript version" -> "Use workspace version"
+
+###快捷键说明
+1. tab键可以任意在输入框中切换
+2. 回车Enter键可以生成任务和确定修改任务
+3. 输入状态下按esc键可以清除输入框内容，如果输入框内容为空则删除任务
+4. 聚焦状态下按ctrl键可以完成或取消完成任务
