@@ -66,16 +66,16 @@ export default {
   },
   setup() {
     const instance = getCurrentInstance()
-    const { plan_list, content, addplan, edit_plan, save_plan, delete_plan, keyup_seach, keyup_plan } = usePlan()
+    const { plan_list, content, add_plan, edit_plan, save_plan, delete_plan, keyup_search, keyup_plan } = usePlan()
     return {
       instance,
       plan_list,
       content,
-      addplan,
+      add_plan,
       edit_plan,
       save_plan,
       delete_plan,
-      keyup_seach,
+      keyup_search,
       keyup_plan
     }
   }

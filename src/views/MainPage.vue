@@ -30,10 +30,11 @@ export default {
 .n-layout-footer {
   /* position: fixed; */
   height: 8vh;
-  background: rgba(128, 128, 128, 0.5);
+  // background: rgba(128, 128, 128, 0.5);
+  background: rgba(127, 221, 255, 0.5);
 }
 .n-layout-content {
-  flex: 1; 
+  flex: 1;
   background: #fff;
 }
 </style>

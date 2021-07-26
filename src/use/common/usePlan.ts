@@ -11,7 +11,7 @@ export default function () {
   const plan_list: plan_list_item[] = reactive(local_list)
   const content = ref('')
 
-  const addplan = () => {
+  const add_plan = () => {
     plan_list.unshift({
       content: content.value,
       disabled: true,
@@ -44,8 +44,8 @@ export default function () {
     })
   }
 
-  const keyup_seach = (event: KeyboardEvent) => {
-    event.code === 'Enter' && addplan()
+  const keyup_search = (event: KeyboardEvent) => {
+    event.code === 'Enter' && add_plan()
     event.code === 'Escape' && (content.value = '')
   }
 
@@ -76,5 +76,5 @@ export default function () {
       })
     }
   }
-  return { plan_list, content, addplan, edit_plan, delete_plan, save_plan, keyup_seach, keyup_plan }
+  return { plan_list, content, add_plan, edit_plan, delete_plan, save_plan, keyup_search, keyup_plan }
 }

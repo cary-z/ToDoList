@@ -7,8 +7,7 @@
 
 <script lang="ts">
 import { h } from 'vue'
-import { useRoute } from 'vue-router'
-import router from '../router/router'
+import { useRoute, useRouter } from 'vue-router'
 import { NIcon } from 'naive-ui'
 import { List, NewspaperOutline, CalendarClearSharp, Person } from '@vicons/ionicons5'
 function renderIcon(icon: any) {
@@ -56,6 +55,7 @@ export default {
   },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     return {
       menuOptions,
       handleUpdateValue(key: string, item: menuOptions_item) {
