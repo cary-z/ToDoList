@@ -10,7 +10,17 @@
                  ref="todo"
                  type="input"
                  clearable
-                 placeholder="今天需要做什么" />
+                 placeholder="今天需要做什么">
+          <template #suffix>
+            <div class="me-1">
+              <n-icon v-show="content !== ''"
+                      @click="add_plan"
+                      style="cursor: pointer;">
+                <Add />
+              </n-icon>
+            </div>
+          </template>
+        </n-input>
       </n-gi>
     </n-grid>
     <n-grid class="mt-2"
@@ -59,10 +69,11 @@
 <script lang="ts">
 import { getCurrentInstance } from 'vue'
 import usePlan from '../../use/common/usePlan'
-import { Close } from '@vicons/ionicons5'
+import { Close, Add } from '@vicons/ionicons5'
 export default {
   components: {
-    Close
+    Close,
+    Add
   },
   setup() {
     const instance = getCurrentInstance()
