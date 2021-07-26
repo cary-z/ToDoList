@@ -6,7 +6,7 @@
     <n-grid :cols="1">
       <n-gi>
         <n-input v-model:value="content"
-                 @keyup="keyup_seach($event)"
+                 @keyup="keyup_search($event)"
                  ref="todo"
                  type="input"
                  clearable

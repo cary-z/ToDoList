@@ -68,12 +68,25 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style  lang="scss" scoped>
+$item-color: rgba(45, 45, 167, 0.8);
 .n-menu {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+.n-menu :deep(.n-menu-item--selected) .n-menu-item-content {
+  .n-menu-item-content__icon,
+  .n-menu-item-content-header {
+    color: $item-color;
+  }
+}
+.n-menu :deep(.n-menu-item-content):hover {
+  .n-menu-item-content__icon,
+  .n-menu-item-content-header {
+    color: $item-color;
+  }
 }
 </style>
